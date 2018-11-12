@@ -17,35 +17,35 @@ const db = new sqlite3.Database('./database.db');
 // })
 
 //======================================= SOAL 2 =====================================================//
-// let query = `CREATE VIEW Elections AS
-//             SELECT COUNT(voterId) AS totalVote, politicianId AS candidateId, name AS candidateName
-//             FROM ((Votes 
-//             INNER JOIN Politicians ON Votes.politicianId = Politicians.id)
-//             INNER JOIN Voters ON Votes.voterId = Voters.id)
-//             GROUP BY name
-//             ORDER BY totalVote DESC
-//             LIMIT 3
-//             `
-// db.run(query, function(err){
-//     if(err){
-//         console.log("Err:", err)
-//     }
-// }) 
+let query = `CREATE VIEW Elections AS
+            SELECT COUNT(voterId) AS totalVote, politicianId AS candidateId, name AS candidateName
+            FROM ((Votes 
+            INNER JOIN Politicians ON Votes.politicianId = Politicians.id)
+            INNER JOIN Voters ON Votes.voterId = Voters.id)
+            GROUP BY name
+            ORDER BY totalVote DESC
+            LIMIT 3
+            `
+db.run(query, function(err){
+    if(err){
+        console.log("Err:", err)
+    }
+}) 
 
-// let query2 = `
-//             SELECT totalVote, candidateName, (first_name||" "||last_name) AS voterName, gender
-//             FROM ((Elections
-//             INNER JOIN Votes ON Elections.candidateId = Votes.politicianId)
-//             INNER JOIN Voters ON Votes.voterId = Voters.id)
-//             ORDER BY totalVote DESC
-//             `
-// db.all(query2, function(err,data){
-//     if(err){
-//         console.log("Err:", err)
-//     } else {
-//         console.log(data)
-//     }
-// })
+let query2 = `
+            SELECT totalVote, candidateName AS politicianName, (first_name||" "||last_name) AS voterName, gender
+            FROM ((Elections
+            INNER JOIN Votes ON Elections.candidateId = Votes.politicianId)
+            INNER JOIN Voters ON Votes.voterId = Voters.id)
+            ORDER BY totalVote DESC
+            `
+db.all(query2, function(err,data){
+    if(err){
+        console.log("Err:", err)
+    } else {
+        console.log(data)
+    }
+})
 
 
 
