@@ -12,7 +12,7 @@ FROM(
 SELECT COUNT(*) AS Totalvote , name, politicians.id
 FROM politicians
 JOIN votes ON politicians.id = votes.politician_id
-GROUP BY name
+GROUP BY name 
 ORDER BY Totalvote desc
 LIMIT 3) AS table1 
 JOIN votes ON table1.id = votes.politician_id
