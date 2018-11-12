@@ -18,7 +18,7 @@ function challenge1() {
 
 function challenge2() {
     
-    const query = `SELECT totalVote, subQuery.name as "politicianName", Voters.name || " " || Voters.last_name AS "voterName", Voters.gender
+    const query = `SELECT totalVote, subQuery.name as "politicianName", Voters.name || " " ||                    Voters.last_name AS "voterName", Voters.gender
                    FROM 
                    (SELECT COUNT(*) AS totalVote, id_candidates AS "idCandidates", Candidates.name FROM VOTES 
                    JOIN Candidates ON idCandidates = Candidates.id
@@ -48,35 +48,6 @@ function challenge3() {
         console.log(data)
     });
 }
-
-function challenge4() {
-    
-    const query = `SELECT COUNT(*) AS "totalVote", name, party, location
-    FROM Votes JOIN Candidates
-    ON  Votes.id_candidates = Candidates.id 
-    GROUP BY name
-    ORDER BY totalVote DESC
-    LIMIT 3;`
-
-    db.all(query, function (err,data) {
-        if (err) throw err;
-        console.log(data)
-    });
-}
-
-function challenge5() {
-    
-    const query = `SELECT name, last_name, gender, age
-    FROM Votes JOIN Voters
-    ON  Voters.id = Votes.id_voters
-    WHERE Votes.id_candidates = (SELECT id FROM Candidates WHERE name = "Olympia Snowe");`
-
-    db.all(query, function (err,data) {
-        if (err) throw err;
-        console.log(data)
-    });
-}
-
-
-
+challenge1()
+challenge2()
 challenge3()
