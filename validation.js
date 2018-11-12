@@ -13,7 +13,18 @@ db.all(grade, function(err, gradeData){
 
 //NOMOR 2
 
-let query = ``
+let query = ` SELECT totalVote, name AS politicianName, (first_name || ' ' || last_name) AS voterName, gender 
+              FROM(
+                SELECT COUNT(politiciansId) AS totalVote, name, politicians.politicians_id
+                FROM votes
+                INNER JOIN politicians ON votes.politiciansId = politicians.politicians_id
+                GROUP BY name
+                ORDER BY totalVote DESC
+                LIMIT 3)`
+db.all(query, function(err, dataQuery) {
+    if(err) throw err
+    console.log(dataQuery)
+})
 
 //NOMOR 3
 let fraud = `SELECT (first_name ||" "|| last_name), gender, age COUNT(votes.votersId)
@@ -21,6 +32,7 @@ let fraud = `SELECT (first_name ||" "|| last_name), gender, age COUNT(votes.vote
              JOIN voters ON votes.votersId = voters.voters_id
              HAVING totalVotes > 1`;
 
-db.all(fraud, function(err, data){
-    console.log(data)
-})
+// db.all(fraud, function(err, data){
+//     if(err) throw err
+//     console.log(data)
+// })
