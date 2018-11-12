@@ -27,7 +27,7 @@ JOIN Votes
 ON supportingTable.politicianId = Votes.politicianId
 Join Voters
 ON Votes.voterId = Voters.id
-ORDER BY totalVotes DESC, supportingTable.name;
+ORDER BY totalVotes DESC, supportingTable.name, VoterName;
 
 Release 0.3
 
